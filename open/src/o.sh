@@ -52,7 +52,12 @@ then
 elif [ $1 == "-t" ]
 then
 	dir=$(python3 $py_file $@)
-    cd $dir
+    if [ -d "$dir" ]
+    then
+        cd "$dir"
+    else
+        echo "$dir"
+    fi
 
 # Add alias.
 elif [ $1 == "-a" ]
