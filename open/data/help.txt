@@ -1,0 +1,25 @@
+Usage:
+	opend <alias1> <alias2> ...     - Open <alias1>, <alias2>,... in windows explorer.
+	opend .				- Open current folder in windows explorer.
+	. opend -t <alias>		- Open <alias> in terminal.
+	source opend -t <alias> 	- Open <alias> in terminal.
+	opend -a -d"," <alias>,<path> 	- Append alias and path to the database file and sort the file.
+					  The flag -d is optional. The default is ",".
+					  If <path> is absent current directory is used.
+	opend -d			- Opend database in vim.
+	opend -l 			- List dir path represented by <alias>.
+	opend -h			- Show this list.
+	opend -r <alias>	- Remove the alias <alias>.
+    opend -br <file>    - Remove all the aliases in file <file>.
+                          The file should contain one alias per line.
+
+Design:
+	opend is bash wrapper around open.py script. 
+	Flag '-t' is passed on to open.py.
+	With this flag open.py prints the dir path of <alias> instead of opening it in windows explorer.
+	This output is used by opend to change directory (cd).
+	To use cd this script has to be sourced.
+	With flag '-h' opend prints the contents of opend_help.txt.
+
+	Script files are stored in /mnt/d/my_programs/open
+

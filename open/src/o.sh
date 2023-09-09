@@ -77,6 +77,8 @@ then
     mv temp.csv dirs.csv
 
 # Remove alias in bulk.
+# Usage: o -br <file>
+# The file should contain one alias per line.
 elif [ $1 == "-br" ]
 then
     CURRENT_DIR=$(pwd)
