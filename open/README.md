@@ -3,6 +3,10 @@
 ### Install
 Run `bash install.sh`. Copies files to ~/.local/opt/open
 Restart the terminal or execute `source ~/.bashrc`.
+WARNING: `install.sh` resets the data stored locally.
+
+### Update
+Run `bash update.sh`.
 
 ### Usage:
 	o <alias1> <alias2> ...     - Open <alias1>, <alias2>,... in windows explorer.
