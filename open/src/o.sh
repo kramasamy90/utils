@@ -27,29 +27,40 @@ src_dir="$HOME/.local/opt/open/src"
 data_dir="$HOME/.local/opt/open/data"
 
 # Open current directory in windows explorer.
-if [ $1 == "." ]
+if [ "$1" == "." ]
 then
 	explorer.exe .
 
 # Open parent directory in windows explorer.
-elif [ $1 == ".." ]
+elif [ "$1" == ".." ]
 then
     explorer.exe ..
 
+elif [ "${1: 0:1}" != "-" ]
+then
+    # test if the $1 has the extension .pdf
+    if [[ "${1: -4}" == ".pdf" ]]
+    then
+        # if it does, open it with SumatraPDF
+        cmd.exe /C start SumatraPDF.exe "$1"
+    else
+        # otherwise, open it in explorer
+        python3 $py_file $@
+    fi
 # Help.
-elif [ $1 == "-h" ]
+elif [ "$1" == "-h" ]
 then
 	cd $data_dir
 	cat help.txt
 
 # List all aliases.
-elif [ $1 == "-l" ]
+elif [ "$1" == "-l" ]
 then
 	cd $data_dir
 	cat dirs.csv
 
 # Open alias in terminal.
-elif [ $1 == "-t" ]
+elif [ "$1" == "-t" ]
 then
 	dir=$(python3 $py_file $@)
     if [ -d "$dir" ]
@@ -60,7 +71,7 @@ then
     fi
 
 # Add alias.
-elif [ $1 == "-a" ]
+elif [ "$1" == "-a" ]
 then
 	python3 $py_file $@
 	cd $src_dir
@@ -68,14 +79,14 @@ then
 	mv temp.csv dirs.csv
 
 # Remove alias.
-elif [ $1 == "-r" ]
+elif [ "$1" == "-r" ]
 then 
     cd $data_dir
 	cat dirs.csv | grep -vwE "^$2" > temp.csv
 	mv temp.csv dirs.csv
 
 # Rename alias.
-elif [ $1 == "-n" ]
+elif [ "$1" == "-n" ]
 then
     cd $data_dir
     cat dirs.csv | sed "s/^$2/$3/" > temp.csv
@@ -84,7 +95,7 @@ then
 # Remove alias in bulk.
 # Usage: o -br <file>
 # The file should contain one alias per line.
-elif [ $1 == "-br" ]
+elif [ "$1" == "-br" ]
 then
     CURRENT_DIR=$(pwd)
 	cd $data_dir
@@ -96,10 +107,11 @@ then
 # Open relative path in windows explorer.
 elif [[ "${1:0:2}" == "./" || "${1: -1}" == "/" ]]
 then
-    cd $1
+    cd "$1"
     explorer.exe .
 
 # Open alias in windows explorer.
 else
-	python3 $py_file $@
+    echo "Invalid option"
+    echo "Use -h for help"
 fi
