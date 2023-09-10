@@ -3,28 +3,13 @@
 # This script cleans up the temporary files created by LaTeX.
 # Delete files with the following extensions:.aux, .bbl, .blg, .log, .out, .synctex.gz
 
-# Usage-1: texclean.sh # Default current directory.
-# Usage-2: texclean.sh <path>
 
-if [ $# -ne 0 ]; then
-    cd $1
-fi
-
-if [ -f *.aux ]; then
-    rm *.aux
-fi
-if [ -f *.bbl ]; then
-    rm *.bbl
-fi
-if [ -f *.blg ]; then
-    rm *.blg
-fi
-if [ -f *.log ]; then
-    rm *.log
-fi
-if [ -f *.out ]; then
-    rm *.out
-fi
-if [ -f *.synctex.gz ]; then
-    rm *.synctex.gz
-fi
+find . -iname "*.aux" | xargs -I {} rm {}
+find . -iname "*.bbl" | xargs -I {} rm {}
+find . -iname "*.blg" | xargs -I {} rm {}
+find . -iname "*.log" | xargs -I {} rm {}
+find . -iname "*.out" | xargs -I {} rm {}
+find . -iname "*.synctex.gz" | xargs -I {} rm {}
+find . -iname "*.snm" | xargs -I {} rm {}
+find . -iname "*.toc" | xargs -I {} rm {}
+find . -iname "*.nav" | xargs -I {} rm {}
