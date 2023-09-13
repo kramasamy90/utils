@@ -67,6 +67,7 @@ then
     then
         cd "$dir"
     else
+        echo "ERROR: the following directory does not exist!!!"
         echo "$dir"
     fi
 
