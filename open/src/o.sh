@@ -38,13 +38,16 @@ then
 
 elif [ "${1: 0:1}" != "-" ]
 then
-    # test if the $1 has the extension .pdf
-    if [[ "${1: -4}" == ".pdf" ]]
+    # If the extension is .pdf it does, open it with SumatraPDF.
+    if [[ "${1: -4}" == ".pdf" || "${1: -4}" == ".PDF"]]
     then
-        # if it does, open it with SumatraPDF
         cmd.exe /C start SumatraPDF.exe "$1"
+    # else if the extension is .txt or .md open it with notepad.
+    elif [[ "${1: -4}" == ".txt" || "${1: -3}" == ".md" ]]
+    then
+        cmd.exe /C start notepad.exe "$1"
+    # otherwise, open the folder alias it in explorer.
     else
-        # otherwise, open it in explorer
         python3 $py_file $@
     fi
 # Help.
