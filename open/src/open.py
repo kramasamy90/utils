@@ -127,3 +127,6 @@ else:
 		if (new_alias != -1):
 			command = 'echo "' + new_alias + '" >> ' + working_dir + '/../data/dirs.csv'
 			os.system(command)
+
+		else:
+			sys.exit(1)

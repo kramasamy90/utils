@@ -39,7 +39,7 @@ then
 elif [ "${1: 0:1}" != "-" ]
 then
     # If the extension is .pdf it does, open it with SumatraPDF.
-    if [[ "${1: -4}" == ".pdf" || "${1: -4}" == ".PDF"]]
+    if [[ "${1: -4}" == ".pdf" || "${1: -4}" == ".PDF" ]]
     then
         cmd.exe /C start SumatraPDF.exe "$1"
     # else if the extension is .txt or .md open it with notepad.
@@ -62,6 +62,12 @@ then
 	cd $data_dir
 	cat dirs.csv
 
+# Search for a keyword.
+elif [ "$1" == "-s" ]
+then
+	cd $data_dir
+	cat dirs.csv | grep $2
+
 # Open alias in terminal.
 elif [ "$1" == "-t" ]
 then
@@ -77,6 +83,26 @@ then
 # Add alias.
 elif [ "$1" == "-a" ]
 then
+	python3 $py_file $@
+    if [ $? -eq 1 ]
+    then
+        echo "Would you like to force rename?[yes/no]"
+        read response
+        if [ $response == "yes" ]
+        then
+            # TODO
+            echo "Incomplete."
+        fi
+    fi
+	cd $src_dir
+	cat dirs.csv | sort -k2 > temp.csv
+	mv temp.csv dirs.csv
+
+elif [ "$1" == "-af" ]
+then
+    cd $data_dir
+	cat dirs.csv | grep -vwE "^$2" > temp.csv
+	mv temp.csv dirs.csv
 	python3 $py_file $@
 	cd $src_dir
 	cat dirs.csv | sort -k2 > temp.csv
