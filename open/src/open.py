@@ -3,7 +3,7 @@ import sys
 
 #%%
 ## Set directories
-working_dir = "/home/kramasamy90/.local/opt/open/src"
+working_dir = "/home/kramasamy/.local/opt/open/src"
 calling_dir = os.getcwd()
 os.chdir(working_dir)
 os.getcwd()
@@ -28,7 +28,7 @@ def import_relation(filename):
 def open_dir(dir_name):
 	explorer = 'explorer.exe'
 	os.chdir(dir_name)
-	os.system('explorer.exe .')
+	os.system('xdg-open .')
 	os.chdir(working_dir)
 
 def escape_spaces(dir_name):

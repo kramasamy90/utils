@@ -29,23 +29,23 @@ data_dir="$HOME/.local/opt/open/data"
 # Open current directory in windows explorer.
 if [ "$1" == "." ]
 then
-	explorer.exe .
+	xdg-open .
 
 # Open parent directory in windows explorer.
 elif [ "$1" == ".." ]
 then
-    explorer.exe ..
+    xdg-open ..
 
 elif [ "${1: 0:1}" != "-" ]
 then
     # If the extension is .pdf it does, open it with SumatraPDF.
     if [[ "${1: -4}" == ".pdf" || "${1: -4}" == ".PDF" ]]
     then
-        cmd.exe /C start SumatraPDF.exe "$1"
+        xdg-open "$1"
     # else if the extension is .txt or .md open it with notepad.
     elif [[ "${1: -4}" == ".txt" || "${1: -3}" == ".md" ]]
     then
-        cmd.exe /C start notepad.exe "$1"
+        xdg-open "$1"
     # otherwise, open the folder alias it in explorer.
     else
         python3 $py_file $@
@@ -54,19 +54,19 @@ then
 elif [ "$1" == "-h" ]
 then
 	cd $data_dir
-	cat help.txt
+	cat ../data/help.txt
 
 # List all aliases.
 elif [ "$1" == "-l" ]
 then
 	cd $data_dir
-	cat dirs.csv
+	cat ../data/dirs.csv
 
 # Search for a keyword.
 elif [ "$1" == "-s" ]
 then
 	cd $data_dir
-	cat dirs.csv | grep $2
+	cat ../data/dirs.csv | grep $2
 
 # Open alias in terminal.
 elif [ "$1" == "-t" ]
@@ -95,8 +95,8 @@ then
         fi
     fi
 	cd $src_dir
-	cat dirs.csv | sort -k2 > temp.csv
-	mv temp.csv dirs.csv
+	cat ../data/dirs.csv | sort -k2 > ../data/temp.csv
+	mv ../data/temp.csv ../data/dirs.csv
 
 elif [ "$1" == "-af" ]
 then
@@ -138,7 +138,7 @@ then
 elif [[ "${1:0:2}" == "./" || "${1: -1}" == "/" ]]
 then
     cd "$1"
-    explorer.exe .
+    xdg-open .
 
 # Open alias in windows explorer.
 else
