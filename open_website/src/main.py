@@ -7,6 +7,7 @@ import yaml
         ow google
         ow mysite_1 mysite_2 ...
         ow -a iitm www.iitm.ac.in
+        ow -r google
 '''
 
 
@@ -37,7 +38,7 @@ if __name__ == '__main__':
             if val is None:
                 print(f'Key not found {key}!')
             else:
-                os.system('microsoft-edge ' + val)
+                os.system('microsoft-edge ' + val + '&')
     
     # Add a new key-val pair.
     if len(sys.argv) > 1 and sys.argv[1][0:2] == '-a':
@@ -67,3 +68,13 @@ if __name__ == '__main__':
         with open(DICT_FILE) as file:
             for line in file:
                 print(line)
+
+    # Remove key-val pair.
+    if len(sys.argv) > 1 and sys.argv[1][0:2] == '-r':
+        key = sys.argv[2]
+        if map.get(key) is None:
+            print(f'This key {key} does not exists.')
+        else:
+            del map[key]
+            with open(DICT_FILE, 'w') as file:
+                yaml.dump(map, file)
