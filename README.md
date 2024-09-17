@@ -1,3 +1,7 @@
 # utils
 Linux utility tools.
-Each folder is an independent tool. Read the `README.md` within these folders.
+
+## Installation.
+* First setup `config.yaml` and then run `init.py`.
+* Each directory is an independent tool. 
+* Use `install.sh` or `install.py` in each of these directories.
