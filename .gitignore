@@ -1,0 +1,12 @@
+open/data/dirs.csv
+*.mp4
+config.yaml
+*.pyc
+*.pyo
+*.pyd
+*.pyz
+*.pyw
+*.pyx
+*.pxd
+*.pxi
+*.pxd
