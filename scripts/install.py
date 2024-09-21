@@ -1,20 +1,21 @@
 #!/usr/bin/python3
 import os
-import re
-import yaml
+import sys
+
+FILE_DIR = os.path.realpath(os.path.dirname(__file__))
+sys.path.append(os.path.join(FILE_DIR, '..'))
 
 from global_vars import INSTALL_DIR
 
 # Define constants
-REPO_DIR = os.path.realpath(os.path.dirname(__file__))
 BASHRC_FILE = os.path.realpath(os.path.expanduser('~/.bashrc'))
 
 # Load configuration
 WORKING_DIR = os.path.realpath(os.path.join(INSTALL_DIR, \
-                                                    os.path.basename(REPO_DIR)))
+                                                    os.path.basename(FILE_DIR)))
 
 # Copy source to target directory
-source_dir = os.path.realpath(os.path.join(REPO_DIR, 'src'))
+source_dir = os.path.realpath(os.path.join(FILE_DIR, 'src'))
 target_dir = os.path.realpath(os.path.join(WORKING_DIR, 'src'))
 
 if not os.path.exists(target_dir):
