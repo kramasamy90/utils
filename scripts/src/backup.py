@@ -1,14 +1,11 @@
 #!/usr/bin/python3
 import os
 import sys
-import yaml
+from global_vars import DATA_DIR 
 
 # Preamble.
 WORKING_DIR = os.path.realpath(os.path.dirname(__file__))
 CONFIG_FILE = os.path.realpath(os.path.join(WORKING_DIR, '../../config.yaml'))
-with open(CONFIG_FILE, 'r') as file:
-    configs = yaml.safe_load(file)
-DATA_DIR = os.path.realpath(os.path.expanduser(configs['data_dir']))
 CONFIG_DIR = os.path.realpath(os.path.join(DATA_DIR, 'configs'))
 if not os.path.exists(CONFIG_DIR):
     os.makedirs(CONFIG_DIR)

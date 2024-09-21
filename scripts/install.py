@@ -3,17 +3,15 @@ import os
 import re
 import yaml
 
+from global_vars import INSTALL_DIR
+
 # Define constants
 REPO_DIR = os.path.realpath(os.path.dirname(__file__))
-CONFIG_FILE = os.path.realpath(os.path.join(REPO_DIR, '../config.yaml'))
 BASHRC_FILE = os.path.realpath(os.path.expanduser('~/.bashrc'))
 
 # Load configuration
-with open(CONFIG_FILE, 'r') as file:
-    config = yaml.safe_load(file)
-
-INSTALL_DIR = os.path.realpath(os.path.expanduser(config['install_dir']))
-WORKING_DIR = os.path.realpath(os.path.join(INSTALL_DIR, os.path.basename(REPO_DIR)))
+WORKING_DIR = os.path.realpath(os.path.join(INSTALL_DIR, \
+                                                    os.path.basename(REPO_DIR)))
 
 # Copy source to target directory
 source_dir = os.path.realpath(os.path.join(REPO_DIR, 'src'))
