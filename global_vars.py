@@ -7,3 +7,4 @@ _DATA_DIR = '~/Code/data'
 # Don't touch the below code.
 INSTALL_DIR = os.path.realpath(os.path.expanduser(_INSTALL_DIR))
 DATA_DIR = os.path.realpath(os.path.expanduser(_DATA_DIR))
+CACHE_DIR = os.path.realpath(os.path.join(INSTALL_DIR, '.cache'))

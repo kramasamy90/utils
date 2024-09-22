@@ -5,7 +5,7 @@ import sys
 
 FILE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-from global_vars import INSTALL_DIR
+from global_vars import INSTALL_DIR, CACHE_DIR
 
 
 '''
@@ -23,3 +23,7 @@ if not os.path.exists(INSTALL_DIR):
 
 # Copy global_vars.py to target location.
 os.system(f"cp {REPO_DIR}/global_vars.py {INSTALL_DIR}/global_vars.py")
+
+# Create cache directory.
+if not os.path.exists(CACHE_DIR):
+    os.makedirs(CACHE_DIR)
