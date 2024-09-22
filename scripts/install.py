@@ -11,12 +11,12 @@ from global_vars import INSTALL_DIR
 BASHRC_FILE = os.path.realpath(os.path.expanduser('~/.bashrc'))
 
 # Load configuration
-WORKING_DIR = os.path.realpath(os.path.join(INSTALL_DIR, \
+INSTALL_DIR = os.path.realpath(os.path.join(INSTALL_DIR, \
                                                     os.path.basename(FILE_DIR)))
 
 # Copy source to target directory
 source_dir = os.path.realpath(os.path.join(FILE_DIR, 'src'))
-target_dir = os.path.realpath(os.path.join(WORKING_DIR, 'src'))
+target_dir = os.path.realpath(os.path.join(INSTALL_DIR, 'src'))
 
 if not os.path.exists(target_dir):
     os.makedirs(target_dir)
