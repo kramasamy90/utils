@@ -1,7 +1,12 @@
 #!/usr/bin/python3
 
 import os
+import sys
 import yaml
+
+FILE_DIR = os.path.abspath(os.path.dirname(__file__))
+
+from global_vars import INSTALL_DIR, CACHE_DIR
 
 
 '''
@@ -12,17 +17,19 @@ directory.
 
 # Get directory info. 
 REPO_DIR = os.path.dirname(os.path.abspath(__file__))
-CONFIG_FILE = os.path.join(REPO_DIR, 'config.yaml')
-with open(CONFIG_FILE, 'r') as file:
-    configs = yaml.safe_load(file)
-INSTALL_DIR = os.path.realpath(os.path.expanduser(configs['install_dir']))
+
+# Write INSTALL_DIR and CACHE_DIR to yaml file.
+with open(f"{REPO_DIR}/config.yaml", "w") as f:
+    yaml.dump({"INSTALL_DIR": INSTALL_DIR, "CACHE_DIR": CACHE_DIR}, f)
 
 # Create installation directory.
 if not os.path.exists(INSTALL_DIR):
     os.makedirs(INSTALL_DIR)
 
-# Update and save config.yaml.
-TARGET_CONFIG_FILE = os.path.join(INSTALL_DIR, 'config.yaml')
-configs['repo_dir'] = REPO_DIR
-with open(TARGET_CONFIG_FILE, 'w') as file:
-    yaml.dump(configs, file)
+# Copy global_vars.py to target location.
+os.system(f"cp {REPO_DIR}/global_vars.py {INSTALL_DIR}/global_vars.py")
+os.system(f"cp {REPO_DIR}/config.yaml {INSTALL_DIR}/config.yaml")
+
+# Create cache directory.
+if not os.path.exists(CACHE_DIR):
+    os.makedirs(CACHE_DIR)

@@ -21,10 +21,21 @@
 
 # 	Script files are stored in /mnt/d/my_programs/open
 
-py_file="$HOME/.local/opt/open/src/open.py"
-dir_file="$HOME/.local/opt/open/data/dirs.csv"
-src_dir="$HOME/.local/opt/open/src"
-data_dir="$HOME/.local/opt/open/data"
+# Get the directory of this o.sh file.
+FILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+INSTALL_DIR="$FILE_DIR/../.."
+SRC_DIR="$( cd $INSTALL_DIR &> /dev/null && pwd )/open/src"
+DATA_DIR="$( cd $INSTALL_DIR &> /dev/null && pwd )/open/data"
+# 
+# Read INSTALL_DIR and CACHE_DIR from yaml file.
+CACHE_DIR=$(cat $INSTALL_DIR/config.yaml | grep "CACHE_DIR" | sed -E 's/CACHE_DIR:\s+(.*)/\1/')
+
+
+py_file="$SRC_DIR/open.py"
+src_dir="$SRC_DIR"
+data_dir="$DATA_DIR"
+dir_file="$DATA_DIR/dirs.csv"
+
 
 # Open current directory in windows explorer.
 if [ "$1" == "." ]

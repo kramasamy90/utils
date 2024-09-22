@@ -1,9 +1,14 @@
 import os
 import sys
 
+FILE_DIR = os.path.dirname(os.path.abspath(__file__))
+INSTALL_DIR = os.path.dirname(os.path.join(FILE_DIR, '..', '..'))
+SRC_DIR = os.path.join(INSTALL_DIR, 'src')
+DATA_DIR = os.path.join(INSTALL_DIR, 'open',  'data')
+
 #%%
 ## Set directories
-working_dir = "/home/kramasamy/.local/opt/open/src"
+working_dir = SRC_DIR
 calling_dir = os.getcwd()
 os.chdir(working_dir)
 os.getcwd()
