@@ -40,7 +40,7 @@ def escape_spaces(dir_name):
 	dir_name_split_list = dir_name.split(" ")
 	dir_name = ''
 	for dir_name_fragment in dir_name_split_list:
-		dir_name += dir_name_fragment + '\ '
+		dir_name += dir_name_fragment + r'\ '
 	dir_name = dir_name[0:len(dir_name)-2]
 	return(dir_name)
 
