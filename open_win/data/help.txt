@@ -1,0 +1,30 @@
+Usage:
+    o <alias1> <alias2> ...   - Open the aliases' directories in Windows Explorer.
+    o .                       - Open the current folder in Explorer.
+    o ..                      - Open the parent folder in Explorer.
+    o <file>.pdf|.txt|.md     - Open the file with its default application.
+    o .\<path>\               - Open a relative path in Explorer.
+    o -t <alias>              - cd into the alias's directory.
+                                (No sourcing needed, unlike the bash version.)
+    o -a <alias> [<path>]     - Add an alias. <path> defaults to the current
+                                directory; relative paths are resolved.
+    o -a -d<sep> "<alias><sep><path>"
+                              - Single-argument form; default sep is ','.
+                                Quote it in PowerShell: o -a 'docs,C:\Docs'
+    o -af <alias> [<path>]    - Force-add: replace an existing alias entry.
+    o -r <alias>              - Remove an alias.
+    o -br <file>              - Remove all aliases listed in <file>
+                                (one alias per line).
+    o -n <old> <new>          - Rename an alias.
+    o -s <keyword>            - Search aliases and paths for a keyword.
+    o -l                      - List all aliases.
+    o -h                      - Show this help.
+
+Design:
+    o.ps1 is a thin PowerShell wrapper around open.py. It exists only
+    because a child process cannot change the shell's current directory,
+    so for 'o -t' open.py prints the path and the wrapper runs Set-Location.
+    Everything else is implemented in open.py.
+
+    The alias database is data\dirs.csv (tab-separated: alias<TAB>path),
+    kept sorted by path.
