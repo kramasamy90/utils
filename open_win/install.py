@@ -3,9 +3,11 @@
 
     python install.py
 
-Copies src/ and data/ to INSTALL_DIR\\open_win and adds the src directory
-to the user PATH (registry, HKCU\\Environment). Safe to re-run to update:
-an existing dirs.csv alias database is never overwritten.
+Reads INSTALL_DIR from the repo root's config.yaml (written by init.py,
+which must be run first), copies src/ and data/ to INSTALL_DIR\\open_win
+and adds the src directory to the user PATH (registry, HKCU\\Environment).
+Safe to re-run to update: an existing dirs.csv alias database is never
+overwritten.
 """
 
 import os
@@ -13,10 +15,24 @@ import shutil
 import sys
 
 FILE_DIR = os.path.realpath(os.path.dirname(__file__))
-sys.path.append(os.path.join(FILE_DIR, '..'))
+CONFIG_FILE = os.path.join(FILE_DIR, '..', 'config.yaml')
 
-from global_vars import INSTALL_DIR
 
+def read_install_dir():
+    if not os.path.isfile(CONFIG_FILE):
+        sys.exit(f'config.yaml not found at {os.path.normpath(CONFIG_FILE)}. '
+                 'Run init.py at the repo root first.')
+    with open(CONFIG_FILE, encoding='utf-8') as file:
+        for line in file:
+            # Split on the first colon only: Windows paths contain ':'.
+            key, _, value = line.partition(':')
+            if key.strip() == 'INSTALL_DIR' and value.strip():
+                return value.strip()
+    sys.exit('INSTALL_DIR not found in config.yaml. '
+             'Run init.py at the repo root first.')
+
+
+INSTALL_DIR = read_install_dir()
 SRC_TARGET = os.path.join(INSTALL_DIR, 'open_win', 'src')
 DATA_TARGET = os.path.join(INSTALL_DIR, 'open_win', 'data')
 

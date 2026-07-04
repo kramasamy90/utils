@@ -15,13 +15,15 @@ the bash version.
   `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
 
 ### Install
-From PowerShell, in this directory:
+From PowerShell, first run `python init.py` at the repo root (once), then
+in this directory:
 ```powershell
 python install.py
 ```
-This copies `src/` and `data/` to `%USERPROFILE%\.local\opt\utils\open_win\`
-and adds the `src` directory to your user PATH. Open a new PowerShell
-window afterwards.
+This reads `INSTALL_DIR` from the repo root's `config.yaml` (written by
+`init.py`), copies `src/` and `data/` to `<INSTALL_DIR>\open_win\` and
+adds the `src` directory to your user PATH. Open a new PowerShell window
+afterwards.
 
 ### Update
 Re-run `python install.py`. It refreshes the scripts and `help.txt` but
