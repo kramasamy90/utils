@@ -94,30 +94,39 @@ then
 # Add alias.
 elif [ "$1" == "-a" ]
 then
-	python3 $py_file $@
-    if [ $? -eq 1 ]
+    output=$(python3 $py_file $@)
+    exit_code=$?
+    echo "$output"
+    if [ $exit_code -eq 1 ]
     then
-        echo "Would you like to force rename?[yes/no]"
-        read response
-        if [ $response == "yes" ]
+        if echo "$output" | grep -q "already associated"
         then
-            # TODO
-            echo "Incomplete."
+            echo "Would you like to force rename?[yes/no]"
+            read response
+            if [ "$response" == "yes" ]
+            then
+                old_alias=$(echo "$output" | grep "already associated" | awk '{print $NF}')
+                awk -F'\t' -v old="$old_alias" -v new="$2" \
+                    'BEGIN{OFS="\t"} $1==old{$1=new}1' \
+                    "$dir_file" > "$dir_file.tmp"
+                mv "$dir_file.tmp" "$dir_file"
+                echo "Renamed '$old_alias' to '$2'"
+            fi
         fi
     fi
-	cd $src_dir
-	cat ../data/dirs.csv | sort -k2 > ../data/temp.csv
-	mv ../data/temp.csv ../data/dirs.csv
+    sort -k2 "$dir_file" > "$dir_file.tmp"
+    mv "$dir_file.tmp" "$dir_file"
 
 elif [ "$1" == "-af" ]
 then
-    cd $data_dir
-	cat dirs.csv | grep -vwE "^$2" > temp.csv
-	mv temp.csv dirs.csv
-	python3 $py_file $@
-	cd $src_dir
-	cat dirs.csv | sort -k2 > temp.csv
-	mv temp.csv dirs.csv
+    grep -vwE "^$2" "$dir_file" > "$dir_file.tmp"
+    mv "$dir_file.tmp" "$dir_file"
+    python3 $py_file -a "${@:2}"
+    if [ $? -eq 0 ]
+    then
+        sort -k2 "$dir_file" > "$dir_file.tmp"
+        mv "$dir_file.tmp" "$dir_file"
+    fi
 
 # Remove alias.
 elif [ "$1" == "-r" ]
